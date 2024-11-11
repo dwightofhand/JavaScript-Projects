@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Javascript project </title>
+    <meta charset="UTF-8">
+    <script src="./Javascript/Javascript 1.js"></script>
+</head>    
+<h1>What is your favourite color?</h1>
+<h3>Pick your favourite color from this list</h3>
+<ul>
+    <li>Red</li>
+    <li>Yellow</li>
+    <li>Green</li>
+    <li>Blue</li>
+    <li>Pink</li>
+    <li>Purple</li>
+</ul>
+<h3>Enter your choice below:</h3>
+
+<input id="Color_Input" type="text">
+<button onclick="Color_Function()">Submit Color</button>
+<p id="Output"></p>
+
+<h1 class="Click">This text will change</h1>
+<h1 class="Click">This text will not change</h1>
+<button onclick="Hello_World_Function()">Click me!</button>
+
+<canvas id="myCanvas" width="200" height="100" style="border:1px solid #000000;">
+</canvas>
+
+<script>
+    var c = document.getElementById("myCanvas");
+    var ctx = c.getContext("2d");
+    
+    // Create gradient
+    var grd = ctx.createLinearGradient(0, 0, 200, 0);
+    grd.addColorStop(0, "red");
+    grd.addColorStop(1, "white");
+    
+    // Fill with gradient
+    ctx.fillStyle = grd;
+    ctx.fillRect(10, 10, 150, 80);
+    </script>
+
+
+<body>
+
+
+</body>
+
+</html>
