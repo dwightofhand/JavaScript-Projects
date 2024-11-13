@@ -1,12 +1,19 @@
-let activePlayer ="X";
+//tictactoe.js
 
+//variable to keep track of whose turn it is
+let activePlayer ='X';
+
+//array to store moves
 let selectedSquares = [];
 
+//function to place x or o in a square
 function placeXOrO(squareNumber) {
+    //checks if the square has been selected
     if (!selectedSquares.some(element => element.includes(squareNumber))) {
+        //variable to hold the html element that was clicked on
         let select = document.getElementById(squareNumber);
-
-        if (activePlayer ==="X") {
+        //determines the active player and places the icon
+        if (activePlayer ==='X') {
 
             select.style.backgroundImage = 'url("images/x.png")';
         } else {
@@ -14,32 +21,32 @@ function placeXOrO(squareNumber) {
         }
 
 
-
+        //adds the square number and player to the array 
         selectedSquares.push(squareNumber + activePlayer);
-
+        //call the function to check for a win
         checkWinConditions();
+        //changesthe active player
+        if (activePlayer === 'X') {
 
-        if (activePlayer === "X") {
-
-            activePlayer = "O";
+            activePlayer = 'O';
         } else {
 
-            activePlayer = "X";
+            activePlayer = 'X';
         }
-
-        Audio("./media/place.mp3");
-
-        if (activePlayer === "O") {
+        //function to play the placement sound
+        audio('./media/place.mp3');
+        //checks if it is the computers turn
+        if (activePlayer === 'O') {
 
             disableClick();
 
             setTimeout(function () { computersTurn(); }, 1000);
         }
-
+        //returning true is needed for the computersTurn() function
         return true;
 
     }
-
+//picks a random square for computers turn
     function computersTurn() {
 
         let success = false;
@@ -60,6 +67,8 @@ function placeXOrO(squareNumber) {
     }
 }
 
+//this function parses the selectedSquares array to determine if a player has won
+//the drawLine function is called if a win condition is met
 function checkWinConditions() {
 
     if (arrayIncludes("0X", "1X", "2X")) { drawWinLine (50, 100, 558, 100) }
@@ -93,14 +102,14 @@ function checkWinConditions() {
     else if (arrayIncludes("6O", "4O", "2O")) { drawWinLine(100, 508, 510, 90)}
 
     else if (arrayIncludes("0O", "4O", "8O")) {drawWinLine(100, 100, 520, 520)}
-
+//checks for a tie - if no win conditions are met and 9 squares have been selected 
     else if (selectedSquares.length >= 9) {
-
-        Audio('./media/tie.mp3');
-
+        //plays the tie sound
+        audio('./media/tie.mp3');
+        //resets game after a tie
         setTimeout(function () { resetGame(); }, 500);
     }
-
+    //this function checks for each win condition
     function arrayIncludes(squareA, squareB, squareC) {
 
         const a = selectedSquares.includes(squareA);
@@ -110,21 +119,21 @@ function checkWinConditions() {
         if (a === true && b === true && c === true) { return true; }
     }
 }
-
+//disables click during computers turn
 function disableClick() {
 
     body.style.pointerEvents = 'none';
 
     setTimeout(function () {body.style.pointerEvents = 'auto'; }, 1000)
 }
-
+//plays the audio files 
 function audio(audioURL) {
 
     let audio = new Audio(audioURL);
 
     audio.play();
 }
-
+//function to draw the line across winning coordinates
 function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
 
     const canvas = document.getElementById("win-lines");
@@ -176,7 +185,7 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
             if (x >= x2 && y <= y2) { cancelAnimationFrame(animationLoop);}
         }
     }    
-
+//clears board after the animation
     function clear () {
 
         const animationLoop = requestAnimationFrame(clear);
@@ -193,4 +202,18 @@ function drawWinLine(coordX1, coordY1, coordX2, coordY2) {
     animateLineDrawing ();
 
     setTimeout(function () { clear(); resetGame(); }, 1000);
+}
+//clears the board and the array to restart the game
+function resetGame() {
+
+    for (let i = 0; i < 9; i++) {
+
+        let square = document.getElementById(String(i));
+
+        square.style.backgroundImage ='';
+    }
+
+    selectedSquares = [];
+
+        
 }
